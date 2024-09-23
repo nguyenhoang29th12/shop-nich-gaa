@@ -1,0 +1,206 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Cửa Hàng moi den</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 20px;
+            background: linear-gradient(135deg, #e9ecef 0%, #f8f9fa 100%);
+            animation: gradient 15s ease infinite;
+        }
+        @keyframes gradient {
+            0% { background-position: 0% 50%; }
+            50% { background-position: 100% 50%; }
+            100% { background-position: 0% 50%; }
+        }
+        h1 {
+            text-align: center;
+            color: #343a40;
+            margin-bottom: 20px;
+            text-shadow: 1px 1px 5px rgba(0, 0, 0, 0.3);
+        }
+        .product {
+            border: 1px solid #dee2e6;
+            border-radius: 10px;
+            padding: 15px;
+            margin: 10px;
+            text-align: center;
+            display: inline-block;
+            width: 200px;
+            background-color: white;
+            transition: transform 0.3s, box-shadow 0.3s;
+        }
+        .product:hover {
+            transform: scale(1.05);
+            box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
+        }
+        .product img {
+            max-width: 100%;
+            border-radius: 10px;
+            transition: transform 0.3s;
+        }
+        .product img:hover {
+            transform: scale(1.1);
+        }
+        .btn {
+            background-color: #28a745;
+            color: white;
+            padding: 10px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: background-color 0.3s, transform 0.3s;
+        }
+        .btn:hover {
+            background-color: #218838;
+            transform: translateY(-2px);
+        }
+        .popup, .cart-popup {
+            display: none;
+            position: fixed;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            padding: 20px;
+            background: white;
+            border: 1px solid #ccc;
+            box-shadow: 0 8px 16px rgba(0, 0, 0, 0.3);
+            border-radius: 10px;
+            z-index: 1001;
+            animation: fadeIn 0.5s;
+        }
+        @keyframes fadeIn {
+            from { opacity: 0; }
+            to { opacity: 1; }
+        }
+        .overlay {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.7);
+            z-index: 1000;
+        }
+        .cart {
+            margin-top: 20px;
+            text-align: center;
+        }
+        #totalAmount {
+            font-weight: bold;
+            color: #343a40;
+        }
+    </style>
+</head>
+<body>
+    <h1>Shop ních ga</h1>
+
+    <div class="product">
+        <h2>Ông bố đơn thân (anh ba)</h2>
+        <img src="https://s3.ap-southeast-1.amazonaws.com/cdn.vntre.vn/default/an-ba-to-com-1725471597.jpg" alt="Sản phẩm 1">
+        <p>Giá: 100,000 VNĐ</p>
+        <button class="btn" onclick="addToCart('Ông bố đơn thân (anh ba)', 100000)">Thêm vào giỏ hàng</button>
+    </div>
+    <div class="product">
+        <h2>da den sấm sét</h2>
+        <img src="https://scontent.fhan3-4.fna.fbcdn.net/v/t1.15752-9/441397855_1144005197380520_964598654652269556_n.jpg?_nc_cat=106&amp;ccb=1-7&amp;_nc_sid=9f807c&amp;_nc_eui2=AeHCCTrmS66FvTg0kRB_Ds6UDTfCzoJgEsANN8LOgmASwLutZPeuvl0c1VqEJhoMD6MGXV97URoCdBfBPjUDvC0-&amp;_nc_ohc=cUFRbNUYoRsQ7kNvgHBMn5i&amp;_nc_ht=scontent.fhan3-4.fna&amp;_nc_gid=ACeHBbbJtS_nIUWldWw8vOl&amp;oh=03_Q7cD1QHUUVfBujROLzsDfdFq8yWG0o3ltPFGePDomQFBQAxBGw&amp;oe=6718C814" alt="Sản phẩm 1">
+        <p>Giá: 100,000,000 VNĐ</p>
+        <button class="btn" onclick="addToCart('de den sấm sét', 100000000)">Thêm vào giỏ hàng</button>
+    </div>
+    <div class="product">
+        <h2>Nguyễn Hoàng</h2>
+        <img src="https://s3.ap-southeast-1.amazonaws.com/cdn.vntre.vn/default/an-ba-to-com-1725471597.jpg" alt="Sản phẩm 1">
+        <p>Giá: 100,000 VNĐ</p>
+        <button class="btn" onclick="addToCart('Nguyễn Hoàng', 100000)">Thêm vào giỏ hàng</button>
+    </div>
+    <div class="product">
+        <h2>Ly hà bá</h2>
+        <img src="https://s3.ap-southeast-1.amazonaws.com/cdn.vntre.vn/default/an-ba-to-com-1725471597.jpg" alt="Sản phẩm 1">
+        <p>Giá: 100,000,000 VNĐ</p>
+        <button class="btn" onclick="addToCart('ly hà bá', 100000000)">Thêm vào giỏ hàng</button>
+    </div>
+    <div class="product">
+        <h2>Ngô Sơn</h2>
+        <img src="https://scontent.fhan4-6.fna.fbcdn.net/v/t1.15752-9/460288308_809909357715070_5762163803604403870_n.jpg?_nc_cat=109&amp;ccb=1-7&amp;_nc_sid=9f807c&amp;_nc_eui2=AeFrJRlVWn_1C3HjtLoUtvJi75NYD6GkzXvvk1gPoaTNe6ZZ6W2zHsLVo0Y0CrQlJTPT9hGyaTMG6382berkty4F&amp;_nc_ohc=btlyZ86o3RIQ7kNvgE3rHPk&amp;_nc_ht=scontent.fhan4-6.fna&amp;oh=03_Q7cD1QG32m2tYY2PdPPJ_7MKeDHyPyKCeNA-ZTEe3cTKqzdtBg&amp;oe=6718C74B" alt="Sản phẩm 1">
+        <p>Giá: 5 tỉ không trả giá</p>
+        <button class="btn" onclick="addToCart('Ngô Sơn', 5000000000)">Thêm vào giỏ hàng</button>
+    </div>
+    <div class="product">
+        <h2>Tinh trùng của anh bar</h2>
+        <img src="https://scontent.fhan4-1.fna.fbcdn.net/v/t1.15752-9/448915063_839067754339095_7292221016238024301_n.jpg?_nc_cat=105&amp;ccb=1-7&amp;_nc_sid=9f807c&amp;_nc_eui2=AeF600EVcS607gmIWD7U44FN-G1Z6PPmzJb4bVno8-bMlqEjXM5aYlYXeC_NEbh4QkCGV8_KLiA-dcQAuC8xS8FF&amp;_nc_ohc=xAAqFk_yb-AQ7kNvgEvf-xN&amp;_nc_ht=scontent.fhan4-1.fna&amp;_nc_gid=A1t8Ho2HuT10UPUGOf2d9A2&amp;oh=03_Q7cD1QGCwjDvrqKOB7SooYZljtWLk6v74DvDW87so5qsuqqhww&amp;oe=6718E730" alt="Sản phẩm 1">
+        <p>Giá: 23,000,000</p>
+        <button class="btn" onclick="addToCart('trung tình anh bar', 23000000)">Thêm vào giỏ hàng</button>
+    </div>
+    <!-- Add other products similarly -->
+
+    <div class="cart">
+        <h2>Giỏ hàng của bạn</h2>
+        <div id="cartItems"></div>
+        <p id="totalAmount">Tổng cộng: 0 VNĐ</p>
+        <button class="btn" onclick="checkout()">Thanh toán</button>
+    </div>
+
+    <div class="popup" id="popup">
+        <p>Bạn đéo đủ tiền! <a href="https://facebook.com/bomaytenhoang" target="_blank">Liên hệ với chúng tôi</a></p>
+        <button class="btn" onclick="closePopup()">Đóng</button>
+    </div>
+    
+    <div class="overlay" id="overlay" onclick="closePopup()"></div>
+    
+    <div class="cart-popup" id="cartPopup">
+        <p>Sản phẩm đã được thêm vào giỏ hàng!</p>
+        <button class="btn" onclick="closeCartPopup()">Đóng</button>
+    </div>
+    <a href="https://www.tiktok.com/@nguyen.hoang6497" target="_blank">xin 1 tim video mới đi pls</a>
+
+    <script>
+        let cart = [];
+        let total = 0;
+
+        function addToCart(name, price) {
+            cart.push({ name, price });
+            total += price;
+            displayCart();
+            showCartPopup();
+        }
+
+        function displayCart() {
+            const cartItems = document.getElementById('cartItems');
+            cartItems.innerHTML = '';
+            cart.forEach(item => {
+                cartItems.innerHTML += `<p>${item.name}: ${item.price} VNĐ</p>`;
+            });
+            document.getElementById('totalAmount').innerText = `Tổng cộng: ${total} VNĐ`;
+        }
+
+        function showCartPopup() {
+            document.getElementById('cartPopup').style.display = 'block';
+            document.getElementById('overlay').style.display = 'block';
+        }
+
+        function closeCartPopup() {
+            document.getElementById('cartPopup').style.display = 'none';
+            document.getElementById('overlay').style.display = 'none';
+        }
+
+        function checkout() {
+            showPopup();
+        }
+
+        function showPopup() {
+            document.getElementById('popup').style.display = 'block';
+            document.getElementById('overlay').style.display = 'block';
+        }
+
+        function closePopup() {
+            document.getElementById('popup').style.display = 'none';
+            document.getElementById('overlay').style.display = 'none';
+        }
+    </script>
+</body>
+</html>
